@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  reverse-proxy:
+    image: silverapache
+    container_name: silverpeas-apache
+    stdin_open: true
+    tty: true
+    ports:
+      - 443:443
+      - 80:80
+    volumes:
+      - /home/miguel/Projets/docker-silverpeas/docker-silverpeas-app/silverpeas-apache/log:/var/log/apache2
+    networks:
+      silverpeas-net:
+        ipv4_address: 172.18.0.80
+
+networks:
+  silverpeas-net:
+    external: true
+
+
+
