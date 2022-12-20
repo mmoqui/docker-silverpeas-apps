@@ -1,0 +1,79 @@
+#
+# LDIF schema for dc=icepeas,dc=com
+# Total Entries: 7
+#
+
+# Entry 1: dc=icepeas,dc=com
+#dn: dc=icepeas,dc=com
+#dc: icepeas
+#o: IcePeas
+#objectclass: top
+#objectclass: dcObject
+#objectclass: organization
+
+# Entry 2: ou=silverpeas,dc=icepeas,dc=com
+dn: ou=silverpeas,dc=icepeas,dc=com
+objectclass: organizationalUnit
+objectclass: top
+ou: silverpeas
+
+# Entry 3: uid=jsmith1,ou=silverpeas,dc=icepeas,dc=com
+dn: uid=jsmith1,ou=silverpeas,dc=icepeas,dc=com
+cn: John Smith1
+description: John Smith 1 from Accounting.
+givenname: John
+mail: miguel.moquillon@silverpeas.com
+objectclass: inetOrgPerson
+objectclass: top
+sn: Smith1
+uid: jsmith1
+userpassword: sasa
+
+# Entry 4: uid=jsmith2,ou=silverpeas,dc=icepeas,dc=com
+dn: uid=jsmith2,ou=silverpeas,dc=icepeas,dc=com
+cn: John Smith2
+description: John Smith 2 from Accounting.
+givenname: John
+mail: miguel.moquillon@gmail.com
+objectclass: inetOrgPerson
+objectclass: top
+sn: Smith2
+uid: jsmith2
+userpassword: sasa
+
+# Entry 5: uid=jsmith3,ou=silverpeas,dc=icepeas,dc=com
+dn: uid=jsmith3,ou=silverpeas,dc=icepeas,dc=com
+cn: John Smith3
+description: John Smith 3 from Accounting.
+givenname: John
+mail: miguel.moquillon@free.fr
+objectclass: inetOrgPerson
+objectclass: top
+sn: Smith3
+uid: jsmith3
+userpassword: sasa
+
+# Entry 6: uid=jsmith4,ou=silverpeas,dc=icepeas,dc=com
+dn: uid=jsmith4,ou=silverpeas,dc=icepeas,dc=com
+cn: John Smith4
+description: John Smith 4 from Accounting.
+givenname: John
+mail: mmoquillon@alpesjug.org
+objectclass: inetOrgPerson
+objectclass: top
+sn: Smith4
+uid: jsmith4
+userpassword: sasa
+
+# Entry 7: uid=jsmith5,ou=silverpeas,dc=icepeas,dc=com
+dn: uid=jsmith5,ou=silverpeas,dc=icepeas,dc=com
+cn: Smith5\, John
+description: John Smith 5 from Accounting.
+givenname: John
+mail: miguel.moquillon@snowcamp.io
+objectclass: inetOrgPerson
+objectclass: top
+sn: Smith5
+uid: jsmith5
+userpassword: sasa
+
