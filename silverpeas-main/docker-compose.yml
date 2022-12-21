@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  silverpeas-main:
+    image: silverpeas-run:latest
+    container_name: silverpeas-main
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+    depends_on:
+      - database-main
+      - ldap
+    ports:
+      - 8080:8000
+      - 5005:5005
+    volumes:
+      - silverpeas-data-main:/home/silveruser/silverpeas/data
+      - /home/miguel/.m2/repository:/home/silveruser/.m2/repository
+    networks:
+      silverpeas-net:
+        ipv4_address: 172.18.0.4
+
+  database-main:
+    image: postgres:14
+    container_name: postgresql-main
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgresql-data-main:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      silverpeas-net:
+        ipv4_address: 172.18.0.5
+
+volumes:
+  postgresql-data-main:
+    name: silverpeas-data-main
+  silverpeas-data-main:
+    name: postgresql-data-main
+
+networks:
+  silverpeas-net:
+    external: true
