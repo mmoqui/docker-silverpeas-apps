@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+# Path of the home directory containing all the docker components to launch
+# with docker compose. Each component is related by a folder containing a
+# docker-compose.yml file.
+DOCKER_CPNT_HOME="$HOME/Projets/docker-silverpeas/docker-silverpeas-app"
+
+usage() {
+    self=`basename $0`
+    echo "$self CMD VERSION"
+    echo "with:"
+    echo "CMD      either start or stop, with:"
+    echo "         - start to start the Silverpeas environment"
+    echo "         - stop  to stop the Silverpeas environment"
+    echo "VERSION  the version of Silverpeas to which the command"
+    echo "         is applied. The docker app name is figuring out"
+    echo "         from it by applying the format silverpeas-VERSION"
+    echo ""
+    echo "Description:"
+    echo "This script is aimed to start and stop silverpeas environment"
+    echo "for testing purpose. An environment is made up at least of a"
+    echo "reverse-proxy and an LDAP service shared by all silverpeas, and"
+    echo "a given version of Silverpeas. Each version of Silverpeas is"
+    echo "coupled to a version of a PostgreSQL database."
+    echo ""
+    echo "All the silverpeas environments should be deployed onto the same"
+    echo "network, named silverpeas-net. If this network doesn't exist yet"
+    echo "then this script creates it. If a silverpeas environment has been"
+    echo "never bootstrapped, this script will do it."
+}
+
+start_app() {
+    app="$1"
+    docker compose -f "$DOCKER_CPNT_HOME/$app/docker-compose.yml" start
+    test $? -eq 0 || docker compose -f "$DOCKER_CPNT_HOME/$app/docker-compose.yml" up &
+}
+
+stop_app() {
+    app="$1"
+    docker compose -f "$DOCKER_CPNT_HOME/$app/docker-compose.yml" stop
+}
+
+if [ $# -lt 2 ]; then
+    usage
+    exit 1
+fi
+
+net=`docker network ls -f 'name=silverpeas-net' -q`
+if [ "Z$net" = "Z" ]; then
+    echo "No silverpeas-net network found! We create it..."
+    docker network create --driver=bridge --ipam-driver=default --subnet=172.18.0.0/24 --gateway=172.8.0.1 silverpeas-net
+fi
+
+cmd="$1"
+silverpeas="silverpeas-$2"
+if [ ! -f "$DOCKER_CPNT_HOME/$silverpeas/docker-compose.yml" ]; then
+    echo "No docker app silverpeas-$2 in $DOCKER_CPNT_HOME"
+    exit 3;
+fi
+
+case $cmd in
+    start)
+        echo "Start $silverpeas app..."
+        gateway=`docker ps -f "name=silverpeas-apache" -q`
+        ldap=`docker ps -f "name=openldap-icepeas" -q`
+        test "Z$gateway" = "Z" && start_app silverpeas-apache
+        test "Z$ldap" = "Z" && start_app silverpeas-ldap
+        start_app "$silverpeas"
+        ;;
+    stop)
+        echo "Stop $silverpeas app..."
+        stop_app "$silverpeas"
+        other=`docker ps -f "expose=8000/tcp" -q`
+        if [ "Z$other" = "Z" ]; then
+            stop_app silverpeas-ldap
+            stop_app silverpeas-apache
+        fi
+        ;;
+    *)
+        usage
+        exit 2
+esac
+
