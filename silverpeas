@@ -66,6 +66,7 @@ case $cmd in
         test "Z$gateway" = "Z" && start_app silverpeas-apache
         test "Z$ldap" = "Z" && start_app silverpeas-ldap
         start_app "$silverpeas"
+        docker exec -u silveruser -it $silverpeas /bin/bash
         ;;
     stop)
         echo "Stop $silverpeas app..."

@@ -9,12 +9,17 @@ services:
     command: /bin/bash
     depends_on:
       - database-main
-      - ldap
+    links:
+      - postgresql-main:database
     ports:
       - 8080:8000
       - 5005:5005
+    environment:
+      - DISPLAY=${DISPLAY}
     volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
       - silverpeas-data-main:/home/silveruser/silverpeas/data
+      - /home/miguel/Projets/silverpeas/webapp:/home/silveruser/webapp
       - /home/miguel/.m2/repository:/home/silveruser/.m2/repository
     networks:
       silverpeas-net:

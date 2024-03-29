@@ -9,12 +9,14 @@ services:
     command: /bin/bash
     depends_on:
       - database-stable
-      - ldap
+    links:
+      - postgresql-stable:database
     ports:
       - 8180:8000
       - 5105:5005
     volumes:
       - silverpeas-data-stable:/home/silveruser/silverpeas/data
+      - /home/miguel/Projets/silverpeas/stable-webapp:/home/silveruser/webapp
       - /home/miguel/.m2/repository:/home/silveruser/.m2/repository
     networks:
       silverpeas-net:
