@@ -6,6 +6,7 @@ services:
     container_name: silverpeas-apache
     stdin_open: true
     tty: true
+    hostname: gateway.silverpeas.io
     ports:
       - 443:443
       - 80:80
