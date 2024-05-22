@@ -1,24 +1,24 @@
 #
-# LDIF schema for dc=icepeas,dc=com
+# LDIF schema for dc=silverpeas,dc=io
 # Total Entries: 7
 #
 
-# Entry 1: dc=icepeas,dc=com
-#dn: dc=icepeas,dc=com
-#dc: icepeas
-#o: IcePeas
+# Entry 1: dc=silverpeas,dc=io
+#dn: dc=silverpeas,dc=io
+#dc: silverpeas
+#o: Silverpeas
 #objectclass: top
 #objectclass: dcObject
 #objectclass: organization
 
-# Entry 2: ou=silverpeas,dc=icepeas,dc=com
-dn: ou=silverpeas,dc=icepeas,dc=com
+# Entry 2: ou=icepeas,dc=silverpeas,dc=io
+dn: ou=icepeas,dc=silverpeas,dc=io
 objectclass: organizationalUnit
 objectclass: top
-ou: silverpeas
+ou: icepeas
 
-# Entry 3: uid=jsmith1,ou=silverpeas,dc=icepeas,dc=com
-dn: uid=jsmith1,ou=silverpeas,dc=icepeas,dc=com
+# Entry 3: uid=jsmith1,ou=icepeas,dc=silverpeas,dc=io
+dn: uid=jsmith1,ou=icepeas,dc=silverpeas,dc=io
 cn: John Smith1
 description: John Smith 1 from Accounting.
 givenname: John
@@ -29,8 +29,8 @@ sn: Smith1
 uid: jsmith1
 userpassword: sasa
 
-# Entry 4: uid=jsmith2,ou=silverpeas,dc=icepeas,dc=com
-dn: uid=jsmith2,ou=silverpeas,dc=icepeas,dc=com
+# Entry 4: uid=jsmith2,ou=icepeas,dc=silverpeas,dc=io
+dn: uid=jsmith2,ou=icepeas,dc=silverpeas,dc=io
 cn: John Smith2
 description: John Smith 2 from Accounting.
 givenname: John
@@ -41,8 +41,8 @@ sn: Smith2
 uid: jsmith2
 userpassword: sasa
 
-# Entry 5: uid=jsmith3,ou=silverpeas,dc=icepeas,dc=com
-dn: uid=jsmith3,ou=silverpeas,dc=icepeas,dc=com
+# Entry 5: uid=jsmith3,ou=icepeas,dc=silverpeas,dc=io
+dn: uid=jsmith3,ou=icepeas,dc=silverpeas,dc=io
 cn: John Smith3
 description: John Smith 3 from Accounting.
 givenname: John
@@ -53,8 +53,8 @@ sn: Smith3
 uid: jsmith3
 userpassword: sasa
 
-# Entry 6: uid=jsmith4,ou=silverpeas,dc=icepeas,dc=com
-dn: uid=jsmith4,ou=silverpeas,dc=icepeas,dc=com
+# Entry 6: uid=jsmith4,ou=icepeas,dc=silverpeas,dc=io
+dn: uid=jsmith4,ou=icepeas,dc=silverpeas,dc=io
 cn: John Smith4
 description: John Smith 4 from Accounting.
 givenname: John
@@ -65,9 +65,9 @@ sn: Smith4
 uid: jsmith4
 userpassword: sasa
 
-# Entry 7: uid=jsmith5,ou=silverpeas,dc=icepeas,dc=com
-dn: uid=jsmith5,ou=silverpeas,dc=icepeas,dc=com
-cn: Smith5\, John
+# Entry 7: uid=jsmith5,ou=icepeas,dc=silverpeas,dc=io
+dn: uid=jsmith5,ou=icepeas,dc=silverpeas,dc=io
+cn: John Smith5
 description: John Smith 5 from Accounting.
 givenname: John
 mail: miguel.moquillon@snowcamp.io

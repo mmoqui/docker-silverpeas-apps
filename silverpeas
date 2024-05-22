@@ -62,7 +62,7 @@ case $cmd in
     start)
         echo "Start $silverpeas app..."
         gateway=`docker ps -f "name=silverpeas-apache" -q`
-        ldap=`docker ps -f "name=openldap-icepeas" -q`
+        ldap=`docker ps -f "name=ldap" -q`
         test "Z$gateway" = "Z" && start_app silverpeas-apache
         test "Z$ldap" = "Z" && start_app silverpeas-ldap
         start_app "$silverpeas"

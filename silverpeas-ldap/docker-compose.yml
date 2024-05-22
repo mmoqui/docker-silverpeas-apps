@@ -3,22 +3,37 @@ version: "3.9"
 services:
   ldap:
     image: osixia/openldap:1.5.0
-    container_name: openldap-icepeas
+    container_name: ldap
     command:
       - --copy-service
     volumes:
-      - ~/Projets/docker-silverpeas/docker-silverpeas-app/silverpeas-ldap/ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom
-      - ~/Projets/docker-silverpeas/docker-silverpeas-app/silverpeas-ldap/certs:/container/service/slapd/assets/certs
+      - ./ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom
+      - ./certs:/container/service/slapd/assets/certs
     environment:
-      LDAP_ORGANISATION: IcePeas
-      LDAP_DOMAIN: icepeas.com
-      LDAP_PASSWORD: admin
+      LDAP_ORGANISATION: Silverpeas
+      LDAP_DOMAIN: silverpeas.io
+      LDAP_BASE_DN: "dc=silverpeas,dc=io"
+      LDAP_ADMIN_PASSWORD: admin
+      LDAP_RFC2307BIS_SCHEMA: false
       LDAP_TLS: true
-      LDAP_TLS_CRT_FILENAME: icepeas.crt
-      LDAP_TLS_KEY_FILENAME: icepeas.key
-      LDAP_TLS_CA_CRT_FILENAME: rootCA.pem
+      LDAP_TLS_CRT_FILENAME: ldap.crt
+      LDAP_TLS_KEY_FILENAME: ldap.key
+      LDAP_TLS_DH_PARAM_FILENAME: dhparams.pem
+      LDAP_TLS_CA_CRT_FILENAME: rootCA.crt
+      LDAP_TLS_VERIFY_CLIENT: demand
+      LDAP_REPLICATION: false
+      KEEP_EXISTING_CONFIG: false
+      LDAP_REMOVE_CONFIG_AFTER_SETUP: true
+    healthcheck:
+      test: '[ -e /run/slapd/slapd.pid ] || exit 1'
+      interval: 10s
+      timeout: 10s
+      retries: 100
     domainname: silverpeas.io
-    hostname: icepeas
+    hostname: ldap
+    ports:
+      - 389:389
+      - 636:636
     networks:
       silverpeas-net:
         ipv4_address: 172.18.0.20
@@ -32,11 +47,36 @@ services:
     ports:
       - 8888:80
     depends_on:
-      - ldap
+      ldap:
+        condition: service_healthy
     networks:
       silverpeas-net:
         ipv4_address: 172.18.0.21
-   
+
+  kerberos:
+    image: kerberos:1.20.1
+    build: ./krb5
+    container_name: kdc
+    environment:
+      KRB_REALM: SILVERPEAS.IO
+      KRB_DOMAIN: silverpeas.io
+      LDAP_BASE_DN: dc=silverpeas,dc=io
+      LDAP_ADMIN_PASSWORD: admin
+    volumes:
+      - ./krbusers:/etc/krb5/custom
+    hostname: kerberos
+    domainname: silverpeas.io
+    ports:
+      - 749:749
+      - 464:464
+      - 88:88
+    depends_on:
+      ldap:
+        condition: service_healthy
+    networks:
+      silverpeas-net:
+        ipv4_address: 172.18.0.22
+
 networks:
   silverpeas-net:
     external: true
