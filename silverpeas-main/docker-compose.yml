@@ -32,15 +32,15 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - postgresql-data-main:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./silverpeas.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       silverpeas-net:
         ipv4_address: 172.18.0.5
 
 volumes:
-  postgresql-data-main:
-    name: silverpeas-data-main
   silverpeas-data-main:
+    name: silverpeas-data-main
+  postgresql-data-main:
     name: postgresql-data-main
 
 networks:
