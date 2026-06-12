@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   silverpeas-stable:
     image: silverpeas-run:stable
@@ -10,7 +8,7 @@ services:
     depends_on:
       - database-stable
     links:
-      - postgresql-stable:database
+      - database-stable:database
     ports:
       - 8180:8000
       - 5105:5005
@@ -18,6 +16,8 @@ services:
       - silverpeas-data-stable:/home/silveruser/silverpeas/data
       - /home/miguel/Projets/silverpeas/stable-webapp:/home/silveruser/webapp
       - /home/miguel/.m2/repository:/home/silveruser/.m2/repository
+    extra_hosts:
+      - stable.silverpeas.io:172.18.0.80
     networks:
       silverpeas-net:
         ipv4_address: 172.18.0.14

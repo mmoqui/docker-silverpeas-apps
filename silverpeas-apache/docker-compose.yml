@@ -1,11 +1,7 @@
-version: "3.9"
-
 services:
   reverse-proxy:
     image: silverapache
     container_name: silverpeas-apache
-    stdin_open: true
-    tty: true
     hostname: gateway.silverpeas.io
     ports:
       - 443:443
