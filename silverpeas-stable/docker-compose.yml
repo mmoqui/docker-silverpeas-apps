@@ -6,9 +6,9 @@ services:
     tty: true
     command: /bin/bash
     depends_on:
-      - database-stable
+      - postgresql-stable
     links:
-      - database-stable:database
+      - postgresql-stable:database
     ports:
       - 8180:8000
       - 5105:5005
@@ -22,7 +22,7 @@ services:
       silverpeas-net:
         ipv4_address: 172.18.0.14
 
-  database-stable:
+  postgresql-stable:
     image: postgres:14
     container_name: postgresql-stable
     environment:

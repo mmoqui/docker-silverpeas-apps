@@ -6,9 +6,9 @@ services:
     tty: true
     command: /bin/bash
     depends_on:
-      - database-main
+      - postgresql-main
     links:
-      - database-main:database
+      - postgresql-main:database
     ports:
       - 8080:8000
       - 5005:5005
@@ -25,7 +25,7 @@ services:
       silverpeas-net:
         ipv4_address: 172.18.0.4
 
-  database-main:
+  postgresql-main:
     image: postgres:14
     container_name: postgresql-main
     environment:

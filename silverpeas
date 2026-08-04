@@ -31,7 +31,7 @@ usage() {
 
 start_app() {
     app="$1"
-    docker compose -f "$DOCKER_CPNT_HOME/$app/docker-compose.yml" start
+    docker compose -f "$DOCKER_CPNT_HOME/$app/docker-compose.yml" start &> /dev/null
     test $? -eq 0 || docker compose -f "$DOCKER_CPNT_HOME/$app/docker-compose.yml" up &
 }
 
@@ -48,7 +48,7 @@ fi
 net=`docker network ls -f 'name=silverpeas-net' -q`
 if [ "Z$net" = "Z" ]; then
     echo "No silverpeas-net network found! We create it..."
-    docker network create --driver=bridge --ipam-driver=default --subnet=172.18.0.0/24 --gateway=172.8.0.1 silverpeas-net
+    docker network create --driver=bridge --ipam-driver=default --subnet=172.18.0.0/24 --gateway=172.18.0.1 silverpeas-net
 fi
 
 cmd="$1"
