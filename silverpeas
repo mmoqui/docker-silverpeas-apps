@@ -3,7 +3,7 @@
 # Path of the home directory containing all the docker components to launch
 # with docker compose. Each component is related by a folder containing a
 # docker-compose.yml file.
-DOCKER_CPNT_HOME="$HOME/Projets/docker-silverpeas/docker-silverpeas-app"
+DOCKER_CPNT_HOME="$HOME/Projets/docker/silverpeas/docker-silverpeas-apps"
 
 usage() {
     self=`basename $0`
