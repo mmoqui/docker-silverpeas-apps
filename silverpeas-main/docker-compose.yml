@@ -17,8 +17,8 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - silverpeas-data-main:/home/silveruser/silverpeas/data
-      - /home/miguel/Projets/silverpeas/webapp:/home/silveruser/webapp
-      - /home/miguel/.m2/repository:/home/silveruser/.m2/repository
+      - ./webapp:/home/silveruser/webapp
+      - ${HOME}/.m2/repository:/home/silveruser/.m2/repository
     extra_hosts:
       - main.silverpeas.io:172.18.0.80
     networks:

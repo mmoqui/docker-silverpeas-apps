@@ -7,7 +7,7 @@ services:
       - 443:443
       - 80:80
     volumes:
-      - /home/miguel/Projets/docker-silverpeas/docker-silverpeas-app/silverpeas-apache/log:/var/log/apache2
+      - ./log:/var/log/apache2
     networks:
       silverpeas-net:
         ipv4_address: 172.18.0.80

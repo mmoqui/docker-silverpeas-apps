@@ -14,8 +14,8 @@ services:
       - 5105:5005
     volumes:
       - silverpeas-data-stable:/home/silveruser/silverpeas/data
-      - /home/miguel/Projets/silverpeas/stable-webapp:/home/silveruser/webapp
-      - /home/miguel/.m2/repository:/home/silveruser/.m2/repository
+      - ./webapp:/home/silveruser/webapp
+      - ${HOME}/.m2/repository:/home/silveruser/.m2/repository
     extra_hosts:
       - stable.silverpeas.io:172.18.0.80
     networks:
