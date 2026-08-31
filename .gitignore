@@ -1,3 +1,4 @@
+silverpeas-test
 **/log/*
 **/webapp/**/*
 !**/log/.gitkeep
